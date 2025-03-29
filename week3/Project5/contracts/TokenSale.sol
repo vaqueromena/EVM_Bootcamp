@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-
 import {MyToken} from "./MyToken.sol";
 import {MyNFT} from "./MyNFT.sol";
 
@@ -23,7 +22,7 @@ contract TokenSale {
         nftContract = _nftContract;
     }
 
-    function buyToken(uint256 quantity, address buyer) public payable {
+    function buyTokens() public payable {
         tokenContract.mint(msg.sender, msg.value * ratio);
     }
 }

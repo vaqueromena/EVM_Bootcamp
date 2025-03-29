@@ -55,11 +55,13 @@ describe("NFT Shop", async () => {
       const tokenConstractAddress = await tokenSaleContract.read.tokenContract();
       const tokenContract = await viem.getContractAt("MyToken", tokenConstractAddress);
       const totalSupply = await tokenContract.read.totalSupply();
-      expect(totalSupply).to.gte(0n);
-
+      expect(totalSupply).to.greaterThanOrEqual(0n);
     });
     it("uses a valid ERC721 as NFT collection", async () => {
-      throw new Error("Not implemented");
+      const { nftContract, tokenSaleContract } = await loadFixture(deployContract);
+      const nftConstractAddress = await  tokenSaleContract.read.nftContract();
+      expect(nftConstractAddress.toLowerCase).to.equal(nftContract.address.toLowerCase);
+      
     });
   })
   describe("When a user buys an ERC20 from the Token contract", async () => {
@@ -67,9 +69,17 @@ describe("NFT Shop", async () => {
       throw new Error("Not implemented");
     })
     it("gives the correct amount of tokens", async () => {
-
-      throw new Error("Not implemented");
+      const { tokenSaleContract, otherAccount, paymentTokenContract} = await loadFixture(deployContract);
+      const tokenBalanceBefore = await paymentTokenContract.read.balanceOf([otherAccount.account.address]);
+      const tx = await tokenSaleContract.write.buyTokens({
+        value: TEST_BUY_TOKENS, 
+        account: otherAccount.account
+      });
+        const tokenBalanceAfter = await paymentTokenContract.read.balanceOf([otherAccount.account.address]);
+        const diff = tokenBalanceAfter - tokenBalanceBefore;
+        expect(diff).to.eq(TEST_BUY_TOKENS * RATIO);
     });
+    
   })
   describe("When a user burns an ERC20 at the Shop contract", async () => {
     it("gives the correct amount of ETH", async () => {

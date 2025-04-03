@@ -11,14 +11,6 @@ import {Nonces} from "@openzeppelin/contracts/utils/Nonces.sol";
 contract MyToken is ERC20, AccessControl, ERC20Permit, ERC20Votes {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // constructor(address defaultAdmin, address minter)
-    //     ERC20("MyToken", "MTK")
-    //     ERC20Permit("MyToken")
-    // {
-    //     _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
-    //     _grantRole(MINTER_ROLE, minter);
-    // }
-
     constructor()
         ERC20("MyToken", "MTK")
         ERC20Permit("MyToken")

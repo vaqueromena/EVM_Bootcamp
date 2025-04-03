@@ -29,8 +29,10 @@ async function main() {
     `Account ${acc1.account.address
     } has ${votes.toString()} units of voting power before self delegating\n`
   );
+  
 //  delegation transaction
-  const delegateTx = await contract.write.delegate([acc1.account.address], {
+console.log('--------------delegation transaction----------------------------');
+const delegateTx = await contract.write.delegate([acc1.account.address], {
     account: acc1.account,
   });
   await publicClient.waitForTransactionReceipt({ hash: delegateTx });
